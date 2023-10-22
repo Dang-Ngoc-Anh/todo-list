@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border: 1px solid black;
+    width: 500px;
+    margin-top: 100px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+
+.header{
+    max-width: 100%;
+    width: 100%;
+}
+.header h1{
+    text-align: center;
+    color: rgb(225, 54, 35);
+}
+
+.header .input{
+    width: 100%;
+    outline: none;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-bottom:1px solid gray ;
+    border-top: 1px solid gray;
+
+}

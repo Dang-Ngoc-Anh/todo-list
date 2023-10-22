@@ -1,0 +1,23 @@
+.footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-center .btn , .footer-right .btn{
+    margin: 4px;
+    border: 1px solid sienna;
+    background: salmon;
+    color: white;
+    border-radius: 10px;
+}
+
+.footer-center .btn:hover , .footer-right .btn:hover{
+    background: rgb(227, 154, 146);
+
+    cursor: pointer;
+}
+.footer .footer-left{
+    color: rgb(80, 79, 79);
+    font-size: 13px;
+}
