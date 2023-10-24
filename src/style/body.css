@@ -1,10 +1,10 @@
 .body{
-    width: 100%;
+    max-width: 100%;
+    height: 300px;
 }
 
 .item div {
-    margin-right: 2px;
-
+    margin-right: 10px;
 }
 .body .item{
     width: 100%;
@@ -65,4 +65,9 @@
 
 .item div .btn-update:hover{
     color: rgb(85, 150, 219);
+}
+
+.body .item .underline{
+    text-decoration: underline;
+    color: red;
 }
