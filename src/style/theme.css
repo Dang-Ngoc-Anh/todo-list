@@ -1,0 +1,17 @@
+.dark{
+    background: rgb(119, 118, 118);
+    color: white;
+}
+
+
+.dark h1{
+    color: white;
+}
+.dark .input{
+    background: rgb(224, 220, 220);
+    color: black;
+}
+.body .dark{
+    background: white;
+    color: black;
+}

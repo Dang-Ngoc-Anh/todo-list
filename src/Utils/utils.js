@@ -6,3 +6,7 @@ export const actionStatus = {
 };
 
 export const MAX_PAGE = 5;
+export const THEME = {
+  light: "light",
+  dark: "dark",
+};

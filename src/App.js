@@ -6,7 +6,9 @@ import Header from "./component/Header";
 import uuid from "react-uuid";
 import "./style/header.css";
 import { actionStatus } from "./Utils/utils";
+import { ThemeContext } from "./component/ThemeContext";
 class App extends React.Component {
+  static contextType = ThemeContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -78,13 +80,13 @@ class App extends React.Component {
 
   handleActive = () => {
     const data = [...this.state.data];
-    const dataCopy = data.filter(item => item.done === actionStatus.ACTIVCE)
+    const dataCopy = data.filter((item) => item.done === actionStatus.ACTIVCE);
     this.listRef.current.changeData([...dataCopy]);
   };
 
   handleComplete = () => {
     const data = [...this.state.data];
-    const dataCopy = data.filter(item => item.done === actionStatus.COMPLETE)
+    const dataCopy = data.filter((item) => item.done === actionStatus.COMPLETE);
     this.listRef.current.changeData([...dataCopy]);
   };
 
@@ -107,10 +109,14 @@ class App extends React.Component {
     }
   };
   handleClearComplte = () => {};
+
+  handleChangeTheme = () => {};
   render() {
-    console.log(this.state.data);
     return (
-      <div className="container">
+      <div className={`container ${this.context.theme}`}>
+        <button className="btn-toggle" onClick={this.context.changeTheme}>
+          Togle
+        </button>
         <Header ref={this.headerRef} updateList={this.updateList} />
         <Body
           data={this.state.data}

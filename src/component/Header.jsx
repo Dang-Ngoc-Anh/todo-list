@@ -1,8 +1,11 @@
 import React from "react";
 import '../style/header.css'
+import '../style/theme.css'
 import uuid from "react-uuid";
 import {actionStatus} from "../Utils/utils.js"
+import { ThemeContext } from "./ThemeContext";
 class Header extends React.Component {
+    static contextType = ThemeContext
     constructor(props){
         super(props);
         this.inputRef = React.createRef(null);
@@ -38,8 +41,9 @@ class Header extends React.Component {
         this.inputRef.current.value = value ;
         this.setState({value:this.inputRef.current.value});
     }
+
     render(){
-        return <div className="header">
+        return <div className={`header ${this.context.theme}`} >
             <h1>Todo</h1>
             <input 
                 type="text" 

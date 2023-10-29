@@ -1,7 +1,9 @@
 import React from "react"
 import '../style/item.css'
 import { actionStatus } from "../Utils/utils";
+import { ThemeContext } from "./ThemeContext";
 class Item extends React.Component {
+    static contextType = ThemeContext
 
     constructor(props){
         super(props);
@@ -20,7 +22,7 @@ class Item extends React.Component {
     render(){
         const {id , name  , done} = this.props.item;
         const {handleDelete ,getId ,handleChecked} = this.props;
-        return <div className="item" key={id}>
+        return <div className={`item ${this.context.theme}`} key={id}>
                     <input type="checkbox" className="checkbox"onClick={()=>{
                         let checked = this.checkBoxRef.current.checked;
                         handleChecked(id,checked);

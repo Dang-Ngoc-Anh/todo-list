@@ -1,6 +1,7 @@
 import React from "react";
 import '../style/body.css'
 import Item from "./Item";
+import { ThemeContext } from "./ThemeContext";
 class Body extends React.Component {
     constructor(props){
         super(props)
