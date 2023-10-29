@@ -5,6 +5,7 @@ import Footer from "./component/Footer";
 import Header from "./component/Header";
 import uuid from "react-uuid";
 import "./style/header.css";
+import { actionStatus } from "./Utils/utils";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,42 +14,35 @@ class App extends React.Component {
         {
           id: uuid(),
           name: "this is data 1",
-          loading: false,
-          done: false,
+          loading: actionStatus.ALL,
+          done: actionStatus.ACTIVCE,
         },
         {
           id: uuid(),
           name: "this is data 1",
-          loading: false,
-          done: false,
+          loading: actionStatus.ALL,
+          done: actionStatus.ACTIVCE,
         },
       ],
     };
-    this.myRef = React.createRef();
+    this.headerRef = React.createRef(null);
+    this.listRef = React.createRef(null);
   }
 
-  handleKeyUp = (e) => {
-    const input = this.myRef.current;
-    let result = input.value.trim();
-    if (e.keyCode === 13) {
-      if (!result) {
-        alert("Bạn chưa nhập ji");
-      } else {
-        const dataCoppy = [
-          ...this.state.data,
-          {
-            id: uuid(),
-            name: result,
-            loading: false,
-            done: false,
-          },
-        ];
-
-        this.setState({
-          data: dataCoppy,
-        });
-        input.value = "";
-      }
+  updateList = (id, value) => {
+    if (!id) {
+      const data = [...this.state.data, value];
+      this.setState({ data: data });
+    } else {
+      const data = [...this.state.data];
+      data.map((item) => {
+        if (item.id === id) {
+          item.name = value.name;
+        }
+        return item;
+      });
+      this.setState({ data: data });
+      localStorage.clear();
     }
   };
 
@@ -58,72 +52,74 @@ class App extends React.Component {
     this.setState({ data: dataCoppy });
   };
 
-  handleUpdate = (id, value) => {
-    try {
-      let dataCopy = [...this.state.data];
-      dataCopy.forEach((item) => {
-        if (item.id === id) {
-          item.name = value;
-        }
-        return item;
-      });
-      this.setState({
-        data: dataCopy,
-      });
-      console.log(this.state.data);
-    } catch (error) {
-      console.log(error.message);
-    }
+  getId = (id) => {
+    localStorage.setItem("id", id);
+    let value = this.state.data.map((item) => {
+      if (item.id === id) return item.name;
+    });
+    this.headerRef.current.showValue(value);
   };
 
   handleChecked = (id, checked) => {
     const data = this.state.data;
     data.map((item) => {
       if (item.id === id && checked) {
-        item.done = true;
-      } else item.done = false;
-      return item;
+        item.done = actionStatus.COMPLETE;
+      } else if (item.id === id && !checked) item.done = actionStatus.ACTIVCE;
     });
     this.setState({
       data: data,
     });
-    console.log(this.state.data);
   };
 
-  handleAll = () => {};
+  handleAll = () => {
+    this.listRef.current.changeData([...this.state.data]);
+  };
 
-  handleActive = (index) => {
-    try {
-    } catch (error) {
-      alert("Bạn chưa chọn");
+  handleActive = () => {
+    const data = [...this.state.data];
+    const dataCopy = data.filter(item => item.done === actionStatus.ACTIVCE)
+    this.listRef.current.changeData([...dataCopy]);
+  };
+
+  handleComplete = () => {
+    const data = [...this.state.data];
+    const dataCopy = data.filter(item => item.done === actionStatus.COMPLETE)
+    this.listRef.current.changeData([...dataCopy]);
+  };
+
+  switchAction = (act) => {
+    switch (act) {
+      case actionStatus.ALL:
+        this.handleAll();
+        break;
+      case actionStatus.ACTIVCE:
+        this.handleActive();
+        break;
+      case actionStatus.COMPLETE:
+        this.handleComplete();
+        break;
+      case actionStatus.CLEAR_COMPLETE:
+        this.handleClearComplte();
+        break;
+      default:
+        break;
     }
   };
-
-  handleComplete = (index) => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   handleClearComplte = () => {};
   render() {
+    console.log(this.state.data);
     return (
       <div className="container">
-        <Header handleKeyUp={this.handleKeyUp} myRef={this.myRef} />
+        <Header ref={this.headerRef} updateList={this.updateList} />
         <Body
           data={this.state.data}
+          ref={this.listRef}
+          getId={this.getId}
           handleDelete={this.handleDelete}
-          handleUpdate={this.handleUpdate}
           handleChecked={this.handleChecked}
         />
-        <Footer
-          data={this.state.data}
-          handleAll={this.handleAll}
-          handleActive={this.handleActive}
-          handleComplete={this.handleComplete}
-          handleClearComplte={this.handleClearComplte}
-        />
+        <Footer switchAction={this.switchAction} />
       </div>
     );
   }

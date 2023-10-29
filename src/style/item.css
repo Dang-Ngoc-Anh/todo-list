@@ -1,0 +1,65 @@
+.item div {
+    margin-right: 10px;
+}
+
+.item >.output{
+    padding: 10px;
+    width: 400px;
+    outline: none;
+}
+.item >.output{
+    padding: 10px;
+    width: 400px;
+    outline: none;
+    border: none;
+}
+
+.item .checkbox{
+    border: 1px solid black;
+    width: 1.3em;
+    height: 1.3em;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.item .checkbox:checked{
+    background-color: brown;
+}
+
+.item div .btn{
+    margin: 2px;
+    background: transparent;
+    border: 1px solid rgb(165, 162, 162);
+    border-radius: 3px;
+    cursor: pointer;
+}
+.item div .btn-update{
+    color: rgb(39, 124, 215);
+}
+.item div .btn-delete{
+    color: rgb(212, 80, 80);
+}
+
+.item div .btn-delete:hover{
+    color: rgb(202, 109, 109);
+}
+
+.item div .btn-update:hover{
+    color: rgb(85, 150, 219);
+}
+
+.body .item .underline{
+    text-decoration: underline;
+    color: red;
+}
+
+.complete{
+    text-decoration: underline;
+    color: rgb(9, 133, 170);
+}

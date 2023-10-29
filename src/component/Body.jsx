@@ -1,42 +1,32 @@
 import React from "react";
 import '../style/body.css'
-import Footer from "./Footer";
+import Item from "./Item";
 class Body extends React.Component {
     constructor(props){
         super(props)
-        this.state = {
-            data : ""
+        this.inputUpdate = React.createRef();
+        this.state= {
+            data:this.props.data
         }
-        this.inputUpdate = React.createRef()
     }
 
-    handleChange = (e)=>{
-        const input = this.inputUpdate.current.value.trim()
+    changeData = (data) =>{
         this.setState({
-            data:e.currentTarget.value
+            data:data
         })
-        console.log(this.state.data);
     }
-
-    checked = (e) => {
-        return e.currentTarget.checked;
+    
+    componentDidUpdate(prevProps) {
+        if (prevProps.data !== this.props.data) {
+            this.setState({ data: this.props.data });
+        }
     }
     render()
     {
-        const {data , handleDelete,handleUpdate,handleChecked} = this.props
-        const result = this.state.data
-        return <div className="body" >
+        const {handleDelete,handleUpdate,handleChecked,getId} = this.props
+        return <div className="body">
             {
-             data.map((i) => {
-                return <div className="item" key={i.id}>
-                        <input type="checkbox" className="checkbox" name="id" onClick={(e)=> handleChecked(i.id , this.checked(e))} key={i.id}/>
-                        <input type="text" className={`output ${i.done ? 'underline' : ''}`} defaultValue={i.name}  onChange={this.handleChange} />
-                    <div>
-                    <button className="btn btn-update" ><i class="fa-solid fa-pen" onClick={()=> handleUpdate(i.id ,result )} key={i.id} ref={this.inputUpdate}></i></button>
-                    <button className="btn btn-delete" onClick={()=> handleDelete(i.id)}><i class="fa-solid fa-trash-can"></i></button>
-                </div>
-                </div>
-             })  
+                this.state.data?.map((item) => <Item item={item} handleDelete={handleDelete} handleUpdate={handleUpdate} handleChecked={handleChecked} getId={getId}/>)  
             }
         </div>
     }
