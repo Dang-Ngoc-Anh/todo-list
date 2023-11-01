@@ -5,7 +5,7 @@ import Footer from "./component/Footer";
 import Header from "./component/Header";
 import uuid from "react-uuid";
 import "./style/header.css";
-import { actionStatus } from "./Utils/utils";
+import { MAX_PAGE, actionStatus } from "./Utils/utils";
 import { ThemeContext } from "./component/ThemeContext";
 class App extends React.Component {
   static contextType = ThemeContext;
@@ -54,20 +54,19 @@ class App extends React.Component {
     this.setState({ data: dataCoppy });
   };
 
-  getId = (id) => {
+  handeleUpdate = (id, value) => {
     localStorage.setItem("id", id);
-    let value = this.state.data.map((item) => {
-      if (item.id === id) return item.name;
-    });
     this.headerRef.current.showValue(value);
   };
 
   handleChecked = (id, checked) => {
     const data = this.state.data;
     data.map((item) => {
-      if (item.id === id && checked) {
-        item.done = actionStatus.COMPLETE;
-      } else if (item.id === id && !checked) item.done = actionStatus.ACTIVCE;
+      if (item.id === id) {
+        checked
+          ? (item.done = actionStatus.COMPLETE)
+          : (item.done = actionStatus.ACTIVCE);
+      }
     });
     this.setState({
       data: data,
@@ -108,20 +107,22 @@ class App extends React.Component {
         break;
     }
   };
+
   handleClearComplte = () => {};
 
   handleChangeTheme = () => {};
+ 
   render() {
     return (
-      <div className={`container ${this.context.theme}`}>
-        <button className="btn-toggle" onClick={this.context.changeTheme}>
+      <div className={`container ${this.context.theme} `}>
+        <button className="btn-toggle " onClick={this.context.changeTheme}>
           Togle
         </button>
         <Header ref={this.headerRef} updateList={this.updateList} />
         <Body
           data={this.state.data}
           ref={this.listRef}
-          getId={this.getId}
+          handeleUpdate={this.handeleUpdate}
           handleDelete={this.handleDelete}
           handleChecked={this.handleChecked}
         />

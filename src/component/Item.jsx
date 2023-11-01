@@ -11,29 +11,20 @@ class Item extends React.Component {
         this.checkBoxRef = React.createRef(undefined);
     }
   
-    checked = (done)=>{
-        if(!(actionStatus.COMPLETE === done)){
-            this.nameRef.current.className = 'complete'
-        }else{
-            this.nameRef.current.classList.remove('complete')
-        }
-    }
-    
     render(){
         const {id , name  , done} = this.props.item;
-        const {handleDelete ,getId ,handleChecked} = this.props;
+        const {handleDelete ,handeleUpdate ,handleChecked} = this.props;
         return <div className={`item ${this.context.theme}`} key={id}>
                     <input type="checkbox" className="checkbox"onClick={()=>{
                         let checked = this.checkBoxRef.current.checked;
                         handleChecked(id,checked);
-                        this.checked(done)
                     }}
                     ref={this.checkBoxRef}
                     />
-                    <div ref={this.nameRef}>{name}</div>
+                    <div className={done === actionStatus.COMPLETE ? 'complete' : ''} ref={this.nameRef}>{name}</div>
                 <div>
-                    <button className="btn btn-update" onClick={() => getId(id)}><i class="fa-solid fa-pen"></i></button>
-                    <button className="btn btn-delete" onClick={() => handleDelete(id)}><i class="fa-solid fa-trash-can"></i></button>
+                    <button className="btn btn-update px-2" onClick={() => handeleUpdate(id,name)}><i class="fa-solid fa-pen"></i></button>
+                    <button className="btn btn-delete px-2" onClick={() => handleDelete(id)}><i class="fa-solid fa-trash-can"></i></button>
                 </div>
             </div>
     }

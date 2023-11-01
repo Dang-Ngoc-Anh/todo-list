@@ -44,7 +44,7 @@ class Header extends React.Component {
 
     render(){
         return <div className={`header ${this.context.theme}`} >
-            <h1>Todo</h1>
+            <h1 className="text-2xl font-bold">Todo</h1>
             <input 
                 type="text" 
                 placeholder="What need to be done " 
